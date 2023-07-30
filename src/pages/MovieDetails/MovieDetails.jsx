@@ -6,6 +6,7 @@ import { useState, useEffect, Suspense, useRef } from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { getMovieDetails } from 'service/get_movies';
 import { ButtonBack, CurrentLink, MovieList, MovieDetailsImg, MovieDetailsList } from './MovieDetails.styled';
+import { getPoster, getToString } from 'service/func';
 
 const MovieDetails = () => {
     const [movieDetails, setMovieDetails] = useState({});
@@ -46,7 +47,7 @@ const MovieDetails = () => {
             <MovieContainer>
                 <MovieDetailsList>
                     <li>
-                        <MovieDetailsImg src={poster_path && `https://image.tmdb.org/t/p/w500${poster_path}`} alt={title}/>
+                        <MovieDetailsImg src={getPoster(poster_path)} alt={title}/>
                     </li>
                     <li>
                         <MovieTitle>{title}</MovieTitle>
@@ -54,10 +55,9 @@ const MovieDetails = () => {
                         <MovieAlmostTitle>Overview</MovieAlmostTitle>
                         <MovieContent>{overview}</MovieContent>
                         <MovieAlmostTitle>Genres</MovieAlmostTitle>
-                        <MovieContent>{genres && genres.length ? genres.map(genre => genre.name).join(', ')
-                        : 'No genres'}</MovieContent>
+                        <MovieContent>{getToString(genres)}</MovieContent>
                         <MovieAlmostTitle>Production Countries</MovieAlmostTitle>
-                        <MovieContent>{production_countries}</MovieContent>
+                        <MovieContent>{getToString(production_countries)}</MovieContent>
                         <MovieList>
                             <li>
                                 <CurrentLink to={"cast"} state={{ from: location.state?.from ?? '/' }}>

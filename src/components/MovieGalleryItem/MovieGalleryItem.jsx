@@ -1,13 +1,18 @@
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
-import { Item, MovieLink} from './MovieGalleryItem.styled';
+import { Item, MovieGalleryItemImage, MovieGalleryItemTitle, MovieLink} from './MovieGalleryItem.styled';
+import { getInfo, getPoster } from 'service/func';
 
-const MovieGalleryItem = ({id, title, name}) => {
+const MovieGalleryItem = (props) => {
+    const { movie: { title, poster_path, name, id } } = props;
+    const poster = getPoster(poster_path);
+    const info = getInfo([title, name]);
     const location = useLocation();
     return (
         <Item>
-            <MovieLink to={`movies/${id}`} state={{from: location}}>
-                {title || name}
+            <MovieLink key={id} to={`movies/${id}`} state={{from: location}}>
+                <MovieGalleryItemImage src={poster} alt={info} />
+                <MovieGalleryItemTitle>{info}</MovieGalleryItemTitle>
             </MovieLink>
         </Item>
     )

@@ -18,12 +18,12 @@ const SearchBar = ({onSubmit}) => {
             event.target.reset();
         }
         setSearchQuery('');
-    }
+    };
 
     return (
         <Bar> 
             <SearchForm onSubmit={handleSubmit}>
-                <SearchFormButton type="submit">
+                <SearchFormButton type="submit" title="Search">
                     <Icon/>
                 </SearchFormButton>
                 <SearchFormInput

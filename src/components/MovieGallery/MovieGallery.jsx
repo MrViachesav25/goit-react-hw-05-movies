@@ -12,11 +12,9 @@ const MovieGallery = ({ movies}) => {
             {movies.map(movie => (
               <MovieGalleryItem 
               key={movie.id} 
-              id={movie.id}
-              title={movie.title} 
-              name={movie.name}
+              movie={movie}
               />
-            ) )}
+            ))}
           </List>
         </MovieBox>
       </>

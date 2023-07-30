@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { MovieBox } from 'components/MovieGallery/MovieGallery.styled';
-import { MovieHeader, MovieNav, MovieNavLink} from './Layout.styled';
+import { MovieHeader, MovieMenu, MovieNav, MovieNavLink} from './Layout.styled';
 import { Suspense } from 'react';
 import Loader from 'components/Loader/Loader';
 const Layout = () => {
@@ -8,7 +8,7 @@ const Layout = () => {
         <>
             <MovieHeader>
                 <MovieBox>
-                    <MovieNav>
+                    <MovieNav style={MovieMenu}>
                         <MovieNavLink to="/">Home</MovieNavLink>
                         <MovieNavLink to="/movies">Movies</MovieNavLink>
                     </MovieNav>

@@ -1,24 +1,25 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieCredits } from 'service/get_movies';
-import { MovieContainer, MovieTitle, MovieAlmostTitle, MovieContent  } from 'components/Reviews/Reviews.styled';
-import { MovieCastList, MovieCastImage } from './Cast.styled';
+import { MovieContainer, MovieTitle, MovieAlmostTitle } from 'components/Reviews/Reviews.styled';
+import { MovieCastList, MovieCastImage, MovieCastTitle, MovieCastItem } from './Cast.styled';
 import Loader from 'components/Loader';
 import ErrorMessage from 'components/ErrorMessage';
+import { getPoster } from 'service/func';
 
 const Cast = () => {
-    const [cast, setCast] = useState([]);
+    const {movieId} = useParams();
+    const [movieCast, setMovieCast] = useState({});
     const [error, setError] = useState(false);
     const [hereError, setHereError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const {movieId} = useParams();
 
     useEffect(() => {
         const getCast = async id => {
             try {
                 setIsLoading(true);
-                const cast = await getMovieCredits(id);
-                setCast([...cast]);
+                const data = await getMovieCredits(id);
+                setMovieCast(data);
             }
             catch (error) {
                 setError(error);
@@ -36,15 +37,16 @@ const Cast = () => {
            {hereError && <ErrorMessage massage={error}/>}
            <MovieContainer>
                 <MovieTitle>Cast</MovieTitle>
-                {!cast?.length > 0 && <MovieAlmostTitle>Sorry, no actors!</MovieAlmostTitle>}
-                {cast && 
+                {!movieCast.cast?.length > 0 && <MovieAlmostTitle>Sorry, no actors!</MovieAlmostTitle>}
+                {movieCast?.cast && 
                 <MovieCastList>
-                    {cast.map(actor => (
-                        <li key={actor.id}>
-                            <MovieCastImage src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`} alt={actor.name}/>
-                            <MovieAlmostTitle>{actor.name}</MovieAlmostTitle>
-                            <MovieContent>{actor.character}</MovieContent>
-                        </li>
+                    {movieCast.cast.map(actor => (
+                        <MovieCastItem key={actor.id}>
+                            <MovieCastImage src={getPoster(actor.profile_path)} alt={actor.name}/>
+                            <MovieCastTitle>Actor name: {actor.name}</MovieCastTitle>
+                            <MovieCastTitle>Popularity: {actor.popularity}</MovieCastTitle>
+                            <MovieCastTitle>{actor.character}</MovieCastTitle>
+                        </MovieCastItem>
                     ))}
                 </MovieCastList>}
            </MovieContainer>

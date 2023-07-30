@@ -1,5 +1,15 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+
+export const MovieMenu = {
+  display: 'flex',
+  flexWrap: 'wrap',
+  alignContent: 'center',
+  justifyContent: 'center',
+  gap: '24px',
+  borderBottom: '1px solid #3f51b5',
+};
+
 export const MovieHeader = styled.header`
   background: #fff;
   box-shadow: 0px 1px 6px 0px rgba(46, 47, 66, 0.08),
@@ -16,17 +26,17 @@ export const MovieNavLink = styled(NavLink)`
   text-decoration: none;
   margin-right: 20px;
   font-family: Roboto;
-  font-size: 24px;
+  font-size: 36px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.5;
   letter-spacing: 0.32px;
   transition: color 250ms linear;
   &.active {
-    color: #2f55;
+    color:  #303f9f;
   }
   &:hover {
-    color: #2f55;
+    color:  #303f9f;
     &::after {
       transform: scaleX(1);
     }
@@ -38,7 +48,7 @@ export const MovieNavLink = styled(NavLink)`
     bottom: -25px;
     width: 100%;
     height: 4px;
-    background-color: #2f55;
+    background-color:  #303f9f;
     border-radius: 2px;
     transform: scaleX(0);
     transition: transform 250ms linear;

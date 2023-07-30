@@ -32,6 +32,14 @@ export const MovieDetailsList = styled.ul`
   padding: 24px;
   display: flex;
   gap: 20px;
+
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+  }
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+  }
 `;
 
 export const MovieDetailsImg = styled.img`
@@ -39,6 +47,14 @@ export const MovieDetailsImg = styled.img`
   height: 315px;
   border-radius: 5px;
   margin: auto;
+
+  @media screen and (min-width: 768px) {
+    height: 400px;
+  }
+
+  @media screen and (min-width: 1280px) {
+    height: 478px;
+  }
 `;
 
 export const MovieList = styled.ul`
