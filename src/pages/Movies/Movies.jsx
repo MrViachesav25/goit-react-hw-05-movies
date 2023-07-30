@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getSearchMovie } from 'service/get_movies';
 
 const Movies = () => {
-    const [value, setValue] = useState('');
+    const [searchValue, setSearchValue] = useState('');
     const [movies, setMovies] = useState([]);
     const [totalHits, setTotalHits] = useState(0);
     const [page, setPage] = useState(1);
@@ -23,18 +23,18 @@ const Movies = () => {
     const searchQuery = searchParams.get('query');
 
     const handleSubmit = query => {
-        if(value !== query) {
-            setValue('');
+        if(searchValue !== query) {
             setMovies([]);
             setPage(1);
             setTotalHits(0);
             setFinal(false);
             setSearchParams({query: query});
+            setSearchValue('');
         }
     };
 
     useEffect(() => {
-        if(!value || final) {
+        if(!searchQuery || final) {
           setIsLoading(false);
           return;
         }
@@ -56,11 +56,10 @@ const Movies = () => {
             }
             let theFinal = false;
             if(!data.results.length || data.results.length < 12) theFinal = true;
-
+            setFinal(theFinal);
             setMovies(prevMovies => [...prevMovies, ...data.results]);
             setTotalHits(data.total_results);
             setIsLoading(false);
-            setFinal(theFinal);
             setError(null);
           } catch (error) {
             setError(error);
@@ -71,7 +70,7 @@ const Movies = () => {
         };
     
         takeMovies();
-      }, [searchQuery, value, page, final]);
+      }, [searchQuery, page, final]);
 
       const infiniteScroll = useRef(null);
       useEffect(() => {
@@ -94,10 +93,10 @@ const Movies = () => {
           <SearchBar onSubmit={handleSubmit}/>
           {movies.length > 0 && <MovieGallery
             movies={movies}
-            searchValue={value}
+            searchValue={searchValue}
             totalHits={totalHits} />}
           {isLoading && <Loader/>}
-          {final && movies.length > 0 && <Message value="Final" totalHits={totalHits} />}
+          {final && movies.length > 0 && <Message searchValue="Final" totalHits={totalHits} />}
           <div className='bottom' ref={infiniteScroll} />
           {hereError && <ErrorMessage message={error} />}
           <ToastContainer hideProgressBar />

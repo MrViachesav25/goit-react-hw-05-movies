@@ -3,7 +3,7 @@ import { useState } from 'react';
 import {ReactComponent as Icon} from '../../icons/search.svg';
 import { Bar, SearchForm, SearchFormButton, SearchFormInput } from './SearchBar.styled';
 
-const SearchBar = ({onSubmit}) => {
+const SearchBar = ({ onSubmit }) => {
     const [searchQuery, setSearchQuery] = useState('');
 
     const handleChange = event => {
